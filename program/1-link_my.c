@@ -61,9 +61,69 @@ void traverseList(PNODE list)
     }
     p = list->pNext;//把链表的首结点作为临时节点
     while(p != NULL) {
-        printf("%d\n",p->data);
+        printf("%d ",p->data);
         p = p->pNext;
     }
+    printf("\n");
+}
+
+/*
+    在pos位置之后插入一个元素data
+ */
+int insertList(PNODE list,int pos,int data)
+{
+    PNODE p_new,p_pos;
+    int i = 0;
+    if (list->pNext == NULL)
+    {
+        return -1;
+    }
+    //构造新节点
+    p_new = (PNODE)malloc(sizeof(NODE));
+    p_new->data = data;
+    p_new->pNext = NULL;
+    //找到pos位置
+    p_pos = list;
+    while(p_pos->pNext && i < pos) {
+        p_pos = p_pos->pNext;
+        ++i;
+    }
+    if (!(p_pos) || i > pos)//位置不合理
+    {
+        return -1;
+    }
+    //连线
+    p_new->pNext = p_pos->pNext;
+    p_pos->pNext = p_new;
+
+    return 0;
+}
+
+/*
+    删除第pos个元素
+ */
+int deleteList(PNODE list,int pos)
+{
+    //找到第pos个节点
+    // PNODE p = list + pos;//连续空间时才可以这么用！
+    // PNODE p_pre = p - 1;
+    // PNODE p_next = p + 1;
+    
+    PNODE p_pre = list;
+    int i = 0;
+    //找到第pos-1个节点
+    while(p_pre->pNext && i < pos-1) {
+        p_pre = p_pre->pNext;
+        ++i;
+    }
+    if (!(p_pre->pNext) || i > pos)//位置不合理
+    {
+        return -1;
+    }
+    PNODE p = p_pre->pNext;
+    p_pre->pNext = p->pNext;
+    free(p);
+    return 0;
 }
 
 
@@ -72,8 +132,21 @@ int main(int argc, char const *argv[])
     int num;
     printf("请输入链表长度：\n");
     scanf("%d",&num);
+    if (num < 1)
+    {
+        printf("链表长度最小值为1\n");
+        return -1;
+    }
+    //创建链表
     PNODE list = createList(num);
     traverseList(list);
-    // printf("list=%p\n",list);
+    //在第2个节点后插入节点100
+    insertList(list,2,100);
+    traverseList(list);
+    //删除第4个元素
+    deleteList(list,4);
+    traverseList(list);
+
+    printf("程序结束\n");
     return 0;
 }
