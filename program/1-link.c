@@ -6,7 +6,7 @@
 #define true 1
 #define false 0
 
-//定义链表节点
+//定义链表节点和指向节点的指针
 typedef struct Node
 {
     int data;//数据域
