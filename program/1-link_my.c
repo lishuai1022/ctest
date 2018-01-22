@@ -49,6 +49,23 @@ PNODE createList(int num) {
     return pHead;
 }
 
+/*
+    遍历链表，传入链表的头结点指针作为参数
+    注：要用到临时节点，临时节点不断后移，直到链表末尾
+ */
+void traverseList(PNODE list)
+{
+    PNODE p;//临时节点
+    if(list->pNext == NULL) {
+        return;
+    }
+    p = list->pNext;//把链表的首结点作为临时节点
+    while(p != NULL) {
+        printf("%d\n",p->data);
+        p = p->pNext;
+    }
+}
+
 
 int main(int argc, char const *argv[])
 {
@@ -56,6 +73,7 @@ int main(int argc, char const *argv[])
     printf("请输入链表长度：\n");
     scanf("%d",&num);
     PNODE list = createList(num);
-    printf("list=%p\n",list);
+    traverseList(list);
+    // printf("list=%p\n",list);
     return 0;
 }
