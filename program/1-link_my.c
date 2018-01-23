@@ -8,6 +8,66 @@ typedef struct Node
 } NODE, * PNODE;
 
 /*
+    初始化一个空的链表
+ */
+PNODE initList() {
+    PNODE pHead;
+    pHead = (PNODE) malloc(sizeof(NODE));
+    if (pHead == NULL)
+    {
+        printf("内存分配失败！\n");
+        exit(-1);
+    }
+    pHead->pNext = NULL;
+    return pHead;
+}
+
+/*
+    判断链表是否为空
+ */
+int isEmptyList(PNODE list) {
+    if (list == NULL || list->pNext == NULL)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+/*
+    获取链表长度
+ */
+
+int getListLength(PNODE list) {
+    if(isEmptyList(list)) {
+        return 0;
+    }
+
+    PNODE p = list;
+    int length = 0;
+    while(p->pNext != NULL) {
+        ++length;
+        p = p->pNext;
+    }
+    return length;
+}
+
+/*
+    获取链表第pos位置
+ */
+
+PNODE getListPos(PNODE list,int pos) {
+    PNODE p = list;
+    int j = 0;
+    if(!isEmptyList(list) && getListLength(list) >= pos) {
+        while(p->pNext != NULL && j < pos) {
+            p = p->pNext;
+            ++j;
+        }
+    }
+    return p;
+}
+
+/*
     “尾插法”构造带头结点单链表，返回头结点的指针（地址）
     注：1.每次尾插完一个新节点，新节点即为尾节点
         2.头结点不变化，返回头结点的地址就可以找到这个单链表了；
@@ -15,18 +75,11 @@ typedef struct Node
  */
 PNODE createList(int num) {
     int val;//存放节点值
-    //头节点
-    PNODE pHead;
-    pHead = (PNODE)malloc(sizeof(NODE));
-    if (pHead == NULL)
-    {
-        printf("内存分配失败！\n");
-        exit(-1);
-    }
-    pHead->pNext = NULL;
-
+    //头节点 尾节点
+    PNODE pHead,pTail;
+    pHead = initList();
     //尾指针
-    PNODE pTail = pHead;//头节点和尾节点是一个节点
+    pTail = pHead;//头节点和尾节点是一个节点
 
     //构造链表节点
     for (int i = 0; i < num; ++i)
@@ -129,6 +182,9 @@ int deleteList(PNODE list,int pos)
 
 int main(int argc, char const *argv[])
 {
+    // PNODE listlist = initList();
+    // printf("list=%p\n", listlist);
+    // return 0;
     int num;
     printf("请输入链表长度：\n");
     scanf("%d",&num);
@@ -140,12 +196,24 @@ int main(int argc, char const *argv[])
     //创建链表
     PNODE list = createList(num);
     traverseList(list);
+
+    PNODE pos_node = getListPos(list,3);
+    printf("pos_node->data=%d\n",(pos_node->data));
+
+
+    // int list_length = getListLength(list);
+    // printf("list_length=%d\n",list_length );
+    return 0;
     //在第2个节点后插入节点100
     insertList(list,2,100);
     traverseList(list);
     //删除第4个元素
     deleteList(list,4);
     traverseList(list);
+
+    //判断是否为空
+    int flag = isEmptyList(list);
+    printf("flag=%d\n", flag);
 
     printf("程序结束\n");
     return 0;
