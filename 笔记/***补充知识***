@@ -19,3 +19,18 @@
 5)mac默认的编辑器是clang+llvm,但是仍然可以用gcc命令。
     gcc -v //查看版本
     gcc -o aaa aaa.c//编译c程序
+
+6)数据结构定义总结：
+    数据域类型定义 
+        typedef int ElemType;
+    数据元素（节点）定义
+        typedef struct NODE {
+            ElemType data;
+            struct NODE *next;
+        } NODE, *PNODE;
+    数据机构定义
+        typedef struct LinkStack {
+            int size;
+            PNODE top,bottom;
+        } LinkStack,*PLinkStack;
+    注意：一种数据结构的结构体包含了指向这个数据结构的指针、数据元素个数等，它只是指向这个数据机构物理地址的一个壳子而已。真正的数据结构在内存中，一般通过指针建立关系构造。只要知道了一个数据结构的首地址，抓住了这个火车头，所有的操作都可以进行了。
