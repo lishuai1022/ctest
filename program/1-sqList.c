@@ -16,6 +16,10 @@ typedef struct sqList
     int listsize;//分配的存储空间（以元素为单位）总个数
 }sqList,*psqList;
 
+
+int compare_sq(int,int);
+
+//初始化
 int InitList_sq(psqList L) {
     L->elem = (int *)malloc(LIST_INIT_SIZE * sizeof(int));
     printf("%p\n", L->elem);
@@ -84,10 +88,36 @@ int ListDelete_sq(psqList L,int i) {
     return 0;
 }
 
+//遍历
 void traverse_sq(psqList L){
     for (int i = 0; i < L->length; ++i)
     {
         printf("%d\n", *(L->elem+i));
+    }
+}
+
+int compare_sq(int x,int y) {
+    if (x == y)
+    {
+        return 1;
+    } else {
+        return 0;
+    }
+
+}
+
+//找到第一个值为给定值的下标
+int LocateElem_sq(psqList L,int e,int (*compare)(int,int)) {
+    int i = 1;
+    int *p = L->elem;
+    while(i <= L->length && !(*compare)(*p++,e)) {
+        ++i;
+    }
+    if (i <= L->length)
+    {
+        return i;
+    } else {
+        return 0;
     }
 }
 
@@ -109,5 +139,8 @@ int main(int argc, char const *argv[])
     ListDelete_sq(L,3);
     ListDelete_sq(L,3);
     traverse_sq(L);
+    // int (*cp_sq)() = compare_sq;
+    int loc = LocateElem_sq(L,500,compare_sq);
+    printf("loc=%d\n", loc);
     return 0;
 }
