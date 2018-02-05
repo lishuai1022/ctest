@@ -45,9 +45,14 @@ int ListInsert_sq(psqList L,int i,int e) {
         L->listsize = L->listsize + LISTINCREMENT;
     }
 
-    int * q = &L->elem[i-1];
+    // int * q = &L->elem[i-1];
+    int *q = L->elem+(i-1);
     //后移
-    for (int * p = &L->elem[L->length-1]; p >= q; --p)
+    // for (int * p = &L->elem[L->length-1]; p >= q; --p)
+    // {
+    //     *(p+1) = *p;
+    // }
+    for (int * p = L->elem+(L->length-1); p >= q; --p)
     {
         *(p+1) = *p;
     }
@@ -66,9 +71,9 @@ int ListDelete_sq(psqList L,int i) {
         return -1;
     }
 
-    int * q = &L->elem[i-1];
+    int * q = L->elem+(i-1);
     //前移
-    for (int * p = q+1; p <= &L->elem[L->length-1]; ++p)
+    for (int * p = q+1; p <= L->elem+(L->length-1); ++p)
     {
         *(q) = *p;
         q++;
