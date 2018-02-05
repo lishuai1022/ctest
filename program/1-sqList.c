@@ -59,6 +59,26 @@ int ListInsert_sq(psqList L,int i,int e) {
     return 0;
 }
 
+//删除第i个元素
+int ListDelete_sq(psqList L,int i) {
+    if (i < 1 || i > L->length+1)
+    {
+        return -1;
+    }
+
+    int * q = &L->elem[i-1];
+    //前移
+    for (int * p = q+1; p <= &L->elem[L->length-1]; ++p)
+    {
+        *(q) = *p;
+        q++;
+    }
+    //表长减1
+    --L->length;
+
+    return 0;
+}
+
 void traverse_sq(psqList L){
     for (int i = 0; i < L->length; ++i)
     {
@@ -79,6 +99,10 @@ int main(int argc, char const *argv[])
     ListInsert_sq(L,1,300);
     ListInsert_sq(L,1,400);
     ListInsert_sq(L,1,500);
+    traverse_sq(L);
+    printf("\n");
+    ListDelete_sq(L,3);
+    ListDelete_sq(L,3);
     traverse_sq(L);
     return 0;
 }
