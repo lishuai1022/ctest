@@ -76,3 +76,6 @@
 15)数组做函数参数：
     传递的是数组首地址，形参实参共用一块内存。
     不用指定数组大小（见test6）
+
+16)字符数组（字符串）处理函数：string.h
+    gets puts strcat strcpy strcmp strlen
