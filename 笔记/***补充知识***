@@ -79,3 +79,6 @@
 
 16)字符数组（字符串）处理函数：string.h
     gets puts strcat strcpy strcmp strlen
+
+17)sizeof
+    c语言的运算符，不是函数，不是宏定义。

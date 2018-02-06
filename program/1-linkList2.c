@@ -36,6 +36,9 @@ int main(int argc, char const *argv[])
         {200,3},
         {300,-1},
     };
+    int k = sizeof(S);
+    printf("%d\n", k);
+    return 0;
     int loc = LocateElem_SL(S,500);
     printf("loc=%d\n", loc);
     return 0;
