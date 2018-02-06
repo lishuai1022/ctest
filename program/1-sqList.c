@@ -121,6 +121,47 @@ int LocateElem_sq(psqList L,int e,int (*compare)(int,int)) {
     }
 }
 
+//La Lb非递减排列，把La Lb归并为非递减排列的Lc
+psqList MergeList_sq(psqList La,psqList Lb) {
+    int *pa,*pa_last,*pb,*pb_last,*pc,listsize;
+    pa = La->elem;
+    pb = Lb->elem;
+    pa_last = pa + La->length - 1;
+    pb_last = pb + Lb->length - 1;
+    listsize = La->listsize + Lb->listsize;
+
+    psqList Lc = (psqList) malloc(sizeof(sqList));
+    if (!Lc)
+    {
+        exit(-1);
+    }
+    InitList_sq(Lc);
+    Lc->elem = (int *)realloc(Lc->elem,listsize * sizeof(int));
+    if(!Lc->elem) {
+        exit(-1);
+    }
+    Lc->listsize = Lc->length = listsize;
+    pc = Lc->elem;
+
+    //归并
+    while(pa <= pa_last && pb <= pb_last) {
+        if(*pa >= *pb) {
+            *pc++ = *pa++;
+        } else {
+            *pc++ = *pb++;
+        }
+    }
+
+    while(pa <= pa_last) {
+        *pc++ = *pa++;
+    }
+    while(pb <= pb_last) {
+        *pc++ = *pb++;
+    }
+
+    return Lc;
+}
+
 int main(int argc, char const *argv[])
 {
     psqList L=(psqList)malloc(sizeof(sqList));
@@ -136,11 +177,26 @@ int main(int argc, char const *argv[])
     ListInsert_sq(L,1,500);
     traverse_sq(L);
     printf("\n");
-    ListDelete_sq(L,3);
-    ListDelete_sq(L,3);
-    traverse_sq(L);
-    // int (*cp_sq)() = compare_sq;
-    int loc = LocateElem_sq(L,500,compare_sq);
-    printf("loc=%d\n", loc);
+    // ListDelete_sq(L,3);
+    // ListDelete_sq(L,3);
+    // traverse_sq(L);
+    // // int (*cp_sq)() = compare_sq;
+    // int loc = LocateElem_sq(L,500,compare_sq);
+    // printf("loc=%d\n", loc);
+
+    psqList L2 = (psqList)malloc(sizeof(sqList));
+    InitList_sq(L2);
+    ListInsert_sq(L2,1,101);
+    ListInsert_sq(L2,1,201);
+    ListInsert_sq(L2,1,301);
+    ListInsert_sq(L2,1,401);
+    ListInsert_sq(L2,1,501);
+    traverse_sq(L2);
+    printf("\n");
+
+    psqList L3 = MergeList_sq(L,L2);
+    traverse_sq(L3);
+    printf("L3->listsize=%d\n",L3->listsize);
+    printf("\n");
     return 0;
 }
