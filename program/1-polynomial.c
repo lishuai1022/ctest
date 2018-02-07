@@ -1,11 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "common.h"
 
-typedef struct Node
+typedef struct node
 {
-    int data;
-    struct Node * pNext;
-} NODE, * PNODE;
+    float coef;//系数
+    int expn;//指数
+    struct node *pNext;
+} NODE,*PNODE;
 
 /*
     初始化一个空的链表
@@ -74,7 +74,8 @@ PNODE getListPos(PNODE list,int pos) {
         3.构造过程中尾节点不断后移，直到所有节点都插入。
  */
 PNODE createList(int num) {
-    ElemType val;//存放节点值
+    int expn;//存放节点值
+    float coef;
     //头节点 尾节点
     PNODE pHead,pTail;
     pHead = initList();
@@ -90,9 +91,12 @@ PNODE createList(int num) {
             printf("内存分配失败！\n");
             exit(-1);
         }
-        printf("请输入元素值：\n");
-        scanf("%d",&val);
-        n->data = val;//填充数据域
+        printf("请输入系数：\n");
+        scanf("%f",&coef);
+        printf("请输入指数：\n");
+        scanf("%d",&expn);
+        n->coef = coef;//填充数据域
+        n->expn = expn;//填充数据域
         n->pNext = NULL;//新节点指针域为空
 
         pTail->pNext = n;//连上线（把新节点连到尾节点后面）
@@ -114,7 +118,7 @@ void traverseList(PNODE list)
     }
     p = list->pNext;//把链表的首结点作为临时节点
     while(p != NULL) {
-        printf("%d ",p->data);
+        printf("%fx^%d\n",p->coef,p->expn);
         p = p->pNext;
     }
     printf("\n");
@@ -123,7 +127,7 @@ void traverseList(PNODE list)
 /*
     在pos位置之后插入一个元素data
  */
-int insertList(PNODE list,int pos,int data)
+int insertList(PNODE list,int pos,float coef,int expn)
 {
     PNODE p_new,p_pos;
     int i = 0;
@@ -133,7 +137,8 @@ int insertList(PNODE list,int pos,int data)
     }
     //构造新节点
     p_new = (PNODE)malloc(sizeof(NODE));
-    p_new->data = data;
+    p_new->coef = coef;
+    p_new->expn = expn;
     p_new->pNext = NULL;
     //找到pos位置
     p_pos = list;
@@ -179,6 +184,9 @@ int deleteList(PNODE list,int pos)
     return 0;
 }
 
+//add
+
+
 
 int main(int argc, char const *argv[])
 {
@@ -197,24 +205,37 @@ int main(int argc, char const *argv[])
     PNODE list = createList(num);
     traverseList(list);
 
-    PNODE pos_node = getListPos(list,3);
-    printf("pos_node->data=%d\n",(pos_node->data));
+    printf("请输入链表长度：\n");
+    scanf("%d",&num);
+    if (num < 1)
+    {
+        printf("链表长度最小值为1\n");
+        return -1;
+    }
+    PNODE list2 = createList(num);
+    traverseList(list2);
+
+    // PNODE pos_node = getListPos(list,3);
+    // printf("pos_node->data=%d\n",(pos_node->data));
 
 
-    // int list_length = getListLength(list);
-    // printf("list_length=%d\n",list_length );
-    return 0;
-    //在第2个节点后插入节点100
-    insertList(list,2,100);
-    traverseList(list);
-    //删除第4个元素
-    deleteList(list,4);
-    traverseList(list);
+    // // int list_length = getListLength(list);
+    // // printf("list_length=%d\n",list_length );
+    // return 0;
+    // //在第2个节点后插入节点100
+    // insertList(list,2,100);
+    // traverseList(list);
+    // //删除第4个元素
+    // deleteList(list,4);
+    // traverseList(list);
 
-    //判断是否为空
-    int flag = isEmptyList(list);
-    printf("flag=%d\n", flag);
+    // //判断是否为空
+    // int flag = isEmptyList(list);
+    // printf("flag=%d\n", flag);
 
-    printf("程序结束\n");
+    // printf("程序结束\n");
     return 0;
 }
+
+
+
