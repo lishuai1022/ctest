@@ -185,7 +185,36 @@ int deleteList(PNODE list,int pos)
 }
 
 //add
+void addPoly(PNODE list_a,PNODE list_b) {
+    PNODE pa = list_a->pNext;
+    PNODE pb = list_b->pNext;
+    int pos = 1;
+    while(pa && pb) {
+        if (pa->expn < pb->expn)
+        {
+            pa = pa->pNext;
+            pos++;
+        } else if (pa->expn == pb->expn)
+        {
+            int sum = pa->coef + pb->coef;
+            pa->coef = sum;
+            pa = pa->pNext;
+            pos++;
+            pb = pb->pNext;
+        } else {
+            insertList(list_a,pos,pb->coef,pb->expn);
+            pos++;
+            pb = pb->pNext;
+        }
+    }
 
+    while(pb) {
+        printf("追加%fx^%d\n",pb->coef,pb->expn);
+        insertList(list_a,pos,pb->coef,pb->expn);
+        pos++;
+        pb = pb->pNext;
+    }
+}
 
 
 int main(int argc, char const *argv[])
@@ -215,6 +244,8 @@ int main(int argc, char const *argv[])
     PNODE list2 = createList(num);
     traverseList(list2);
 
+    addPoly(list,list2);
+    traverseList(list);
     // PNODE pos_node = getListPos(list,3);
     // printf("pos_node->data=%d\n",(pos_node->data));
 
