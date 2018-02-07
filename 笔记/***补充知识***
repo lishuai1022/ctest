@@ -82,3 +82,7 @@
 
 17)sizeof
     c语言的运算符，不是函数，不是宏定义。
+
+18)include(mac 的include路径在/usr/include)
+    include <stdio.h>:到include环境变量的目录里找文件
+    include "common.h":先到当前目录找文件，如果没有，再到include环境变量里找
