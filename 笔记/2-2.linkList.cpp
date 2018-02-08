@@ -30,7 +30,7 @@ Status DelFirst(Link h,Link &q);
 //尾插
 Status Append(LinkList &L,Link s);
 //尾删
-Status Append(LinkList &L,Link &q);
+Status Remove(LinkList &L,Link &q);
 //前插（p之前）
 Status InsBefore(LinkList &L,Link &p,Link s);
 //后插（p之后）
