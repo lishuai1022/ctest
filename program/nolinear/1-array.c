@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//数组做函数的参数
+
+//数组做函数的参数的几种形式
 
 void test(int p[]) {
 	for (int i = 0; i < 10; ++i)
