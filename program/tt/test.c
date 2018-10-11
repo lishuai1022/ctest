@@ -34,7 +34,7 @@ LINKLIST getLinklist(int n[10]) {
 		node = getNode(n[i]);
         //指针连线连起来
 		tail->pnext = node;
-		tail = node;
+		tail = tail->pnext;
 	}
 	return head;
 }
@@ -45,7 +45,7 @@ void printLinklist(LINKLIST head) {
 	while(head->pnext != NULL)
 	{
 		printf("%d\n", head->pnext->data);
-		head++;
+		head = head->pnext;
 	}
 }
 
