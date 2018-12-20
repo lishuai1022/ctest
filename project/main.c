@@ -11,9 +11,9 @@ int main(int argc, char const *argv[])
 	test3(str,2);
 	char *r = getSubStr(str,3);//返回字符串指针
 	printf("%s\n",r);//根据指针打印字符串
-	
+
 	char s2='k';
-	char *r2 = getSubStr(s2,0);//返回字符指针
+	char *r2 = getSubStr2(&s2,0);//返回字符指针
 	printf("%c\n", *r2);//打印字符
 	return 0;
 }

@@ -13,7 +13,14 @@ void test3(char p[],int n) {
 	printf("test3,%s\n",p);
 }
 
+//
 char * getSubStr(char *p,int n) {
+	char *r = p;
+	r += n;
+	return r;
+}
+
+char * getSubStr2(char *p,int n) {
 	char *r = p;
 	r += n;
 	return r;
